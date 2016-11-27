@@ -10,23 +10,32 @@ namespace StatsN.MvcCore.ActionInstrumentation
     public class Instrument : ActionFilterAttribute
     {
         private readonly string metricName;
-        private readonly string dictionaryKey;
+        private readonly string actionDictionary;
+        private readonly string resultDictionary;
 
         public Instrument(string metricName)
         {
-            this.metricName = metricName;
-            this.dictionaryKey = "Instrument." + metricName; 
+            this.metricName = metricName.TrimEnd('.');
+            this.actionDictionary = metricName + ".ActionTiming";
+            this.actionDictionary = metricName + ".ResultTiming"; 
         }
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var istatsd = context.HttpContext.RequestServices.GetService(typeof(IStatsd)) as IStatsd;
             if(istatsd == null) return;
             var stopwatch = new Stopwatch();
-            context.HttpContext.Items[dictionaryKey] = stopwatch;
+            context.HttpContext.Items[actionDictionary] = stopwatch;
             stopwatch.Start();
             base.OnActionExecuting(context);
         }
+        public override void OnResultExecuting(ResultExecutingContext context)
+        {
 
+        }
+        public override void OnResultExecuted(ResultExecutedContext context)
+        {
+
+        }
         public override void OnActionExecuted(ActionExecutedContext context)
         {
             try
