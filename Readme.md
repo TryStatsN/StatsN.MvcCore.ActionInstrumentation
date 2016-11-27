@@ -8,7 +8,7 @@ Register an [IStastd](https://github.com/TryStatsN/StatsN) in your DI container.
 Now just add the attribute to an action to instrument
 
 ```csharp
-[instrument("HomePage.Index.ActionTime")]
+[Instrument("HomePage.Index.ActionTime")]
 public IActionResult Index()
 {
 
