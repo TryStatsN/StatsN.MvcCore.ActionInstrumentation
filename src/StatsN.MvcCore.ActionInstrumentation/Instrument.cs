@@ -19,7 +19,7 @@ namespace StatsN.MvcCore.ActionInstrumentation
         }
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var istatsd = context.HttpContext.RequestServices.GetService(typeof(IStatsd));
+            var istatsd = context.HttpContext.RequestServices.GetService(typeof(IStatsd)) as IStatsd;
             if(istatsd == null) return;
             var stopwatch = new Stopwatch();
             context.HttpContext.Items[dictionaryKey] = stopwatch;
@@ -31,11 +31,12 @@ namespace StatsN.MvcCore.ActionInstrumentation
         {
             try
             {
-                var istatsd = context.HttpContext.RequestServices.GetService(typeof(IStatsd));
+                var istatsd = context.HttpContext.RequestServices.GetService(typeof(IStatsd)) as IStatsd;
                 if(istatsd == null) return;
                 var stopwatch = context.HttpContext.Items[dictionaryKey] as Stopwatch;
                 if(stopwatch == null) return;
                 stopwatch.Stop();
+                istatsd.TimingAsync(metricName, stopwatch.ElapsedMilliseconds);
             }
             catch(Exception e)
             {
