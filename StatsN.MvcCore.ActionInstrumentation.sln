@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A26A3C60-D1E8-4062-AC33-36A82D960092}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
+		Readme.md = Readme.md
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "StatsN.MvcCore.ActionInstrumentation", "src\StatsN.MvcCore.ActionInstrumentation\StatsN.MvcCore.ActionInstrumentation.xproj", "{1925A369-1690-47D6-8A1C-1F98E9707E4B}"
